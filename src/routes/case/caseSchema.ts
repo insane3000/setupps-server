@@ -7,9 +7,11 @@ const caseSchema = new Schema(
     manufacturer: { type: String, trim: true },
     model: { type: String, trim: true },
 
-    length: { type: Number, trim: true },
     form_factor: { type: String, trim: true },
     PSU: { type: String, trim: true },
+    height: { type: Number, trim: true },
+    length: { type: Number, trim: true },
+    width: { type: Number, trim: true },
 
     imageM: [],
     imageS: [],

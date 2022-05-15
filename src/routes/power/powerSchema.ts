@@ -10,6 +10,7 @@ const powerSchema = new Schema(
     efficiency_rating: { type: String, trim: true },
     wattage: { type: String, trim: true },
     form_factor: { type: String, trim: true },
+    modular: { type: String, trim: true },
 
     imageM: [],
     imageS: [],
