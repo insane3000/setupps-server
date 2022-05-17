@@ -9,7 +9,9 @@ const hddSchema = new Schema(
 
     capacity: { type: String, trim: true },
     rpm: { type: Number, trim: true },
-    cache: { type: String, trim: true },
+    cache: { type: Number, trim: true },
+    interface: { type: String, trim: true },
+    form_factor: { type: String, trim: true },
 
     imageM: [],
     imageS: [],

@@ -8,9 +8,11 @@ const ssdSchema = new Schema(
     model: { type: String, trim: true },
 
     capacity: { type: String, trim: true },
-    read: { type: String, trim: true },
-    write: { type: String, trim: true },
-    terabytes_written: { type: String, trim: true },
+    read: { type: Number, trim: true },
+    write: { type: Number, trim: true },
+    TBW: { type: String, trim: true },
+    MTBF: { type: Number, trim: true },
+    form_factor: { type: String, trim: true },
 
     imageM: [],
     imageS: [],

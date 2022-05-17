@@ -12,6 +12,8 @@ const coolerSchema = new mongoose_1.Schema({
     compatibility: { type: String, trim: true },
     cooler_type: { type: String, trim: true },
     noise_level: { type: String, trim: true },
+    fans: { type: Number, trim: true },
+    fans_size: { type: Number, trim: true },
     imageM: [],
     imageS: [],
     specifications: [],
