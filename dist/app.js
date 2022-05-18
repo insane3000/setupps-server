@@ -29,7 +29,7 @@ var clientURI = {
         "https://www.setupps.com",
         "https://admin.setupps.com",
         "https://setupps.com",
-        "http://setupps-client.s3-website-us-east-1.amazonaws.com",
+        "http://setupps-admin.s3-website-us-east-1.amazonaws.com/",
     ],
 };
 const app = (0, express_1.default)();
