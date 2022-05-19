@@ -15,6 +15,7 @@ import nvmeRoutes from "./routes/nvme/nvme.routes";
 import ssdRoutes from "./routes/ssd/ssd.routes";
 import hddRoutes from "./routes/hdd/hdd.routes";
 import coolerRoutes from "./routes/cooler/cooler.routes";
+import adminRoutes from "./routes/admin/admin.routes";
 
 var clientURI = {
   origin: [
@@ -47,5 +48,5 @@ app.use(nvmeRoutes);
 app.use(ssdRoutes);
 app.use(hddRoutes);
 app.use(coolerRoutes);
-
+app.use(adminRoutes);
 export default app;

@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as ssdCtrl from "./ssd.controller";
 // import * as componentCtrl from "../../libs/crudComponent";
 
-// import { tokenValidation } from "../../libs/validateToken";
+import { tokenValidation } from "../../libs/validateToken";
 // import { expireValidation } from "../../libs/validateExpireCode";
 import { uploadLocal } from "../../libs/uploadLocal";
 import { updateLocal } from "../../libs/updateLocal";
@@ -13,9 +13,15 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
 
 // !Action Admin
-router.post("/ssd", upload.array("files"), uploadLocal, ssdCtrl.createComponent);
-router.put("/ssd/:id", upload.array("files"), updateLocal, ssdCtrl.updateComponent);
-router.delete("/ssd/:id", ssdCtrl.deleteComponent);
+router.post("/ssd", tokenValidation, upload.array("files"), uploadLocal, ssdCtrl.createComponent);
+router.put(
+  "/ssd/:id",
+  tokenValidation,
+  upload.array("files"),
+  updateLocal,
+  ssdCtrl.updateComponent
+);
+router.delete("/ssd/:id", tokenValidation, ssdCtrl.deleteComponent);
 router.get("/ssd", ssdCtrl.getComponents);
 router.get("/ssd/:id", ssdCtrl.getComponent);
 

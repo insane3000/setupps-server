@@ -24,19 +24,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const cpuCtrl = __importStar(require("./cpu.controller"));
-// import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
-// import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
 const multer_1 = __importDefault(require("multer"));
+const validateToken_1 = require("../../libs/validateToken");
 const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/cpu", upload.array("files"), uploadLocal_1.uploadLocal, cpuCtrl.createComponent);
-router.put("/cpu/:id", upload.array("files"), updateLocal_1.updateLocal, cpuCtrl.updateComponent);
-router.delete("/cpu/:id", cpuCtrl.deleteComponent);
+router.post("/cpu", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, cpuCtrl.createComponent);
+router.put("/cpu/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, cpuCtrl.updateComponent);
+router.delete("/cpu/:id", validateToken_1.tokenValidation, cpuCtrl.deleteComponent);
 router.get("/cpu", cpuCtrl.getComponents);
 router.get("/cpu/:id", cpuCtrl.getComponent);
 exports.default = router;

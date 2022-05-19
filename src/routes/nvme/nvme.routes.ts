@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as nvmeCtrl from "./nvme.controller";
 // import * as componentCtrl from "../../libs/crudComponent";
 
-// import { tokenValidation } from "../../libs/validateToken";
+import { tokenValidation } from "../../libs/validateToken";
 // import { expireValidation } from "../../libs/validateExpireCode";
 import { uploadLocal } from "../../libs/uploadLocal";
 import { updateLocal } from "../../libs/updateLocal";
@@ -13,9 +13,15 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
 
 // !Action Admin
-router.post("/nvme", upload.array("files"), uploadLocal, nvmeCtrl.createComponent);
-router.put("/nvme/:id", upload.array("files"), updateLocal, nvmeCtrl.updateComponent);
-router.delete("/nvme/:id", nvmeCtrl.deleteComponent);
+router.post("/nvme", tokenValidation, upload.array("files"), uploadLocal, nvmeCtrl.createComponent);
+router.put(
+  "/nvme/:id",
+  tokenValidation,
+  upload.array("files"),
+  updateLocal,
+  nvmeCtrl.updateComponent
+);
+router.delete("/nvme/:id", tokenValidation, nvmeCtrl.deleteComponent);
 router.get("/nvme", nvmeCtrl.getComponents);
 router.get("/nvme/:id", nvmeCtrl.getComponent);
 

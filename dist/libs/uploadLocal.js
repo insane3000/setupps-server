@@ -56,8 +56,6 @@ const uploadLocal = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         next();
     }
     else {
-        req.body.imageXL = "";
-        req.body.imageL = "";
         req.body.imageM = "";
         req.body.imageS = "";
         next();

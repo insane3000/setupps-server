@@ -3,7 +3,7 @@ import sharp from "sharp";
 import path from "path";
 import { randomBytes } from "crypto";
 export const uploadLocal = async (req: any, res: Response, next: NextFunction) => {
-//   console.log(req.body);
+  //   console.log(req.body);
   function removeNonAplhaNumeric(str: string) {
     return str.replace(/[\W_]/g, "").toLowerCase();
   }
@@ -42,8 +42,6 @@ export const uploadLocal = async (req: any, res: Response, next: NextFunction) =
     req.body.specifications = JSON.parse(req.body.specifications);
     next();
   } else {
-    req.body.imageXL = "";
-    req.body.imageL = "";
     req.body.imageM = "";
     req.body.imageS = "";
     next();

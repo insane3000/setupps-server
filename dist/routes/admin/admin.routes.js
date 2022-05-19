@@ -23,20 +23,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const powerCtrl = __importStar(require("./power.controller"));
-// import * as componentCtrl from "../../libs/crudComponent";
+const adminCtrl = __importStar(require("./admin.controller"));
 const validateToken_1 = require("../../libs/validateToken");
-// import { expireValidation } from "../../libs/validateExpireCode";
-const uploadLocal_1 = require("../../libs/uploadLocal");
+// import { uploadLocal } from "../../libs/uploadLocal";
 const updateLocal_1 = require("../../libs/updateLocal");
 const multer_1 = __importDefault(require("multer"));
 const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
-// const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
-// !Action Admin
-router.post("/power", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, powerCtrl.createComponent);
-router.put("/power/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, powerCtrl.updateComponent);
-router.delete("/power/:id", validateToken_1.tokenValidation, powerCtrl.deleteComponent);
-router.get("/power", powerCtrl.getComponents);
-router.get("/power/:id", powerCtrl.getComponent);
+// !Rutas
+// router.post("/insane", upload.array("files"), uploadLocal, adminCtrl.createAdmin);
+router.post("/admin", adminCtrl.checkAdmin);
+router.put("/admin/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, adminCtrl.updateComponent);
+router.delete("/admin/:id", validateToken_1.tokenValidation, adminCtrl.deleteComponent);
+router.get("/admin", validateToken_1.tokenValidation, adminCtrl.getComponents);
+router.get("/admin/:id", validateToken_1.tokenValidation, adminCtrl.getComponent);
 exports.default = router;

@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const hddCtrl = __importStar(require("./hdd.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/hdd", upload.array("files"), uploadLocal_1.uploadLocal, hddCtrl.createComponent);
-router.put("/hdd/:id", upload.array("files"), updateLocal_1.updateLocal, hddCtrl.updateComponent);
-router.delete("/hdd/:id", hddCtrl.deleteComponent);
+router.post("/hdd", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, hddCtrl.createComponent);
+router.put("/hdd/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, hddCtrl.updateComponent);
+router.delete("/hdd/:id", validateToken_1.tokenValidation, hddCtrl.deleteComponent);
 router.get("/hdd", hddCtrl.getComponents);
 router.get("/hdd/:id", hddCtrl.getComponent);
 exports.default = router;

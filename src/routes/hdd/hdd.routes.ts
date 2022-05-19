@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as hddCtrl from "./hdd.controller";
 // import * as componentCtrl from "../../libs/crudComponent";
 
-// import { tokenValidation } from "../../libs/validateToken";
+import { tokenValidation } from "../../libs/validateToken";
 // import { expireValidation } from "../../libs/validateExpireCode";
 import { uploadLocal } from "../../libs/uploadLocal";
 import { updateLocal } from "../../libs/updateLocal";
@@ -13,9 +13,15 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
 
 // !Action Admin
-router.post("/hdd", upload.array("files"), uploadLocal, hddCtrl.createComponent);
-router.put("/hdd/:id", upload.array("files"), updateLocal, hddCtrl.updateComponent);
-router.delete("/hdd/:id", hddCtrl.deleteComponent);
+router.post("/hdd", tokenValidation, upload.array("files"), uploadLocal, hddCtrl.createComponent);
+router.put(
+  "/hdd/:id",
+  tokenValidation,
+  upload.array("files"),
+  updateLocal,
+  hddCtrl.updateComponent
+);
+router.delete("/hdd/:id", tokenValidation, hddCtrl.deleteComponent);
 router.get("/hdd", hddCtrl.getComponents);
 router.get("/hdd/:id", hddCtrl.getComponent);
 

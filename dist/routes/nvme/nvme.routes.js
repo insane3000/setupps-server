@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const nvmeCtrl = __importStar(require("./nvme.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/nvme", upload.array("files"), uploadLocal_1.uploadLocal, nvmeCtrl.createComponent);
-router.put("/nvme/:id", upload.array("files"), updateLocal_1.updateLocal, nvmeCtrl.updateComponent);
-router.delete("/nvme/:id", nvmeCtrl.deleteComponent);
+router.post("/nvme", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, nvmeCtrl.createComponent);
+router.put("/nvme/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, nvmeCtrl.updateComponent);
+router.delete("/nvme/:id", validateToken_1.tokenValidation, nvmeCtrl.deleteComponent);
 router.get("/nvme", nvmeCtrl.getComponents);
 router.get("/nvme/:id", nvmeCtrl.getComponent);
 exports.default = router;

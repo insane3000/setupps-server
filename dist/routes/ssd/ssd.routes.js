@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ssdCtrl = __importStar(require("./ssd.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/ssd", upload.array("files"), uploadLocal_1.uploadLocal, ssdCtrl.createComponent);
-router.put("/ssd/:id", upload.array("files"), updateLocal_1.updateLocal, ssdCtrl.updateComponent);
-router.delete("/ssd/:id", ssdCtrl.deleteComponent);
+router.post("/ssd", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, ssdCtrl.createComponent);
+router.put("/ssd/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, ssdCtrl.updateComponent);
+router.delete("/ssd/:id", validateToken_1.tokenValidation, ssdCtrl.deleteComponent);
 router.get("/ssd", ssdCtrl.getComponents);
 router.get("/ssd/:id", ssdCtrl.getComponent);
 exports.default = router;

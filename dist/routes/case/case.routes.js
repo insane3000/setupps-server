@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const caseCtrl = __importStar(require("./case.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/case", upload.array("files"), uploadLocal_1.uploadLocal, caseCtrl.createComponent);
-router.put("/case/:id", upload.array("files"), updateLocal_1.updateLocal, caseCtrl.updateComponent);
-router.delete("/case/:id", caseCtrl.deleteComponent);
+router.post("/case", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, caseCtrl.createComponent);
+router.put("/case/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, caseCtrl.updateComponent);
+router.delete("/case/:id", validateToken_1.tokenValidation, caseCtrl.deleteComponent);
 router.get("/case", caseCtrl.getComponents);
 router.get("/case/:id", caseCtrl.getComponent);
 exports.default = router;

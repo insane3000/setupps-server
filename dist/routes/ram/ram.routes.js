@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ramCtrl = __importStar(require("./ram.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/ram", upload.array("files"), uploadLocal_1.uploadLocal, ramCtrl.createComponent);
-router.put("/ram/:id", upload.array("files"), updateLocal_1.updateLocal, ramCtrl.updateComponent);
-router.delete("/ram/:id", ramCtrl.deleteComponent);
+router.post("/ram", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, ramCtrl.createComponent);
+router.put("/ram/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, ramCtrl.updateComponent);
+router.delete("/ram/:id", validateToken_1.tokenValidation, ramCtrl.deleteComponent);
 router.get("/ram", ramCtrl.getComponents);
 router.get("/ram/:id", ramCtrl.getComponent);
 exports.default = router;

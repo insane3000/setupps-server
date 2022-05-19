@@ -20,6 +20,7 @@ const nvme_routes_1 = __importDefault(require("./routes/nvme/nvme.routes"));
 const ssd_routes_1 = __importDefault(require("./routes/ssd/ssd.routes"));
 const hdd_routes_1 = __importDefault(require("./routes/hdd/hdd.routes"));
 const cooler_routes_1 = __importDefault(require("./routes/cooler/cooler.routes"));
+const admin_routes_1 = __importDefault(require("./routes/admin/admin.routes"));
 var clientURI = {
     origin: [
         "http://localhost:3000",
@@ -50,4 +51,5 @@ app.use(nvme_routes_1.default);
 app.use(ssd_routes_1.default);
 app.use(hdd_routes_1.default);
 app.use(cooler_routes_1.default);
+app.use(admin_routes_1.default);
 exports.default = app;

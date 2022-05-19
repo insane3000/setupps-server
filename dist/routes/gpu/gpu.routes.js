@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const gpuCtrl = __importStar(require("./gpu.controller"));
 // import * as componentCtrl from "../../libs/crudComponent";
-// import { tokenValidation } from "../../libs/validateToken";
+const validateToken_1 = require("../../libs/validateToken");
 // import { expireValidation } from "../../libs/validateExpireCode";
 const uploadLocal_1 = require("../../libs/uploadLocal");
 const updateLocal_1 = require("../../libs/updateLocal");
@@ -34,9 +34,9 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 // const update = multer({ storage: multer.memoryStorage() });
 const router = (0, express_1.Router)();
 // !Action Admin
-router.post("/gpu", upload.array("files"), uploadLocal_1.uploadLocal, gpuCtrl.createComponent);
-router.put("/gpu/:id", upload.array("files"), updateLocal_1.updateLocal, gpuCtrl.updateComponent);
-router.delete("/gpu/:id", gpuCtrl.deleteComponent);
+router.post("/gpu", validateToken_1.tokenValidation, upload.array("files"), uploadLocal_1.uploadLocal, gpuCtrl.createComponent);
+router.put("/gpu/:id", validateToken_1.tokenValidation, upload.array("files"), updateLocal_1.updateLocal, gpuCtrl.updateComponent);
+router.delete("/gpu/:id", validateToken_1.tokenValidation, gpuCtrl.deleteComponent);
 router.get("/gpu", gpuCtrl.getComponents);
 router.get("/gpu/:id", gpuCtrl.getComponent);
 exports.default = router;
