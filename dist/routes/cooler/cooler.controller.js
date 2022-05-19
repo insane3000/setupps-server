@@ -69,11 +69,11 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
-    const socket = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.socket) || "";
-    const manufacturer = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.manufacturer) || "";
-    const available = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.available) || "";
-    const gte_cores = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.gte_cores) || 0;
-    const lte_cores = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.lte_cores) || 666;
+    const manufacturer = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.manufacturer) || "";
+    const cooler_type = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.cooler_type) || "";
+    const fans = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.fans) || "";
+    const fans_size = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.fans_size) || "";
+    const available = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.available) || "";
     const gte = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.gte) || 0;
     const lte = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.lte) || 9999999;
     const sort = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.sort) || "";
@@ -91,19 +91,16 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const components = yield coolerSchema_1.default.paginate({
             $or: [
                 { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
-                //   { keywords: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
                 { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
             ],
             price: { $gte: gte, $lte: lte },
-            // total_cores: { $gte: gte_cores, $lte: lte_cores },
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
-                //   { socket: { $regex: socket, $options: "i" } },
-                //   { total_cores: { $regex: total_cores, $options: "i" } },
+                { cooler_type: { $regex: cooler_type, $options: "i" } },
+                { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
+                { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
                 { available: { $regex: available, $options: "i" } },
-                //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
             ],
-            // $orderby: { createdAt: -1 },
         }, {
             page,
             limit,
