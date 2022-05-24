@@ -65,20 +65,18 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
-    const ram_type = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.ram_type) || "";
-    const manufacturer = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.manufacturer) || "";
-    const platform = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.platform) || "";
-    const chipset = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.chipset) || "";
-    const available = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.available) || "";
-    const lan_speed_max = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.lan_speed_max) || "";
-    const gte = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.gte) || 0;
-    const lte = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.lte) || 9999999;
-    const sort = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.sort) || "";
-    const memory_size = ((_o = req.query) === null || _o === void 0 ? void 0 : _o.memory_size) || "";
+    const manufacturer = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.manufacturer) || "";
+    const available = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.available) || "";
+    const gte = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.gte) || 0;
+    const lte = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.lte) || 9999999;
+    const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
+    //!Component
+    const memory_size = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.memory_size) || "";
+    const ram_type = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.ram_type) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -93,24 +91,24 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const components = yield ramSchema_1.default.paginate({
             $or: [
                 { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
-                //   { keywords: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
                 { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
             ],
             price: { $gte: gte, $lte: lte },
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
-                { ram_type: { $regex: ram_type, $options: "i" } },
-                //   { memory_size: memory_size },
-                { memory_size: memory_size === "" ? { $gte: 0, $lte: 1024 } : memory_size },
-                //   { chipset: { $regex: chipset, $options: "i" } },
+                {
+                    memory_size: memory_size === "" ? { $regex: memory_size, $options: "i" } : memory_size,
+                },
+                {
+                    ram_type: ram_type === "" ? { $regex: ram_type, $options: "i" } : ram_type,
+                },
+                //!Required
                 { available: { $regex: available, $options: "i" } },
-                //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
             ],
         }, {
             page,
             limit,
             sort: sort === "" ? { createdAt: "desc" } : { price: sort },
-            // sort: { createdAt: "desc" },
         });
         return res.json(components);
         //     }

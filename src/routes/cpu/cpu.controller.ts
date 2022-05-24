@@ -50,7 +50,6 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const page = parseInt(req.query?.page, 10) || 1;
   const limit = parseInt(req.query?.limit, 10) || 17;
   const search = req.query?.search || "";
-  const socket = req.query?.socket || "";
   const manufacturer = req.query?.manufacturer || "";
   const available = req.query?.available || "";
   const gte_cores = req.query?.gte_cores || 0;
@@ -58,6 +57,9 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const gte = req.query?.gte || 0;
   const lte = req.query?.lte || 9999999;
   const sort = req.query?.sort || "";
+  //!Component
+  const socket = req.query?.socket || "";
+  const integrated_graphics = req.query?.integrated_graphics || "";
   console.log(req.query);
   // !Delete accents
   function diacriticSensitiveRegex(string = "") {
@@ -81,11 +83,10 @@ export const getComponents: RequestHandler = async (req: any, res) => {
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
           { socket: { $regex: socket, $options: "i" } },
-          //   { total_cores: { $regex: total_cores, $options: "i" } },
+          { integrated_graphics: { $regex: integrated_graphics, $options: "i" } },
+          //!Required
           { available: { $regex: available, $options: "i" } },
-          //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
         ],
-        // $orderby: { createdAt: -1 },
       },
       {
         page,

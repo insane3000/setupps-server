@@ -65,18 +65,20 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
-    const socket = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.socket) || "";
-    const manufacturer = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.manufacturer) || "";
-    const available = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.available) || "";
-    const gte_cores = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.gte_cores) || 0;
-    const lte_cores = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.lte_cores) || 666;
-    const gte = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.gte) || 0;
-    const lte = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.lte) || 9999999;
-    const sort = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.sort) || "";
+    const manufacturer = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.manufacturer) || "";
+    const available = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.available) || "";
+    const gte_cores = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.gte_cores) || 0;
+    const lte_cores = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.lte_cores) || 666;
+    const gte = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.gte) || 0;
+    const lte = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.lte) || 9999999;
+    const sort = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.sort) || "";
+    //!Component
+    const socket = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.socket) || "";
+    const integrated_graphics = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.integrated_graphics) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -99,11 +101,10 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
                 { socket: { $regex: socket, $options: "i" } },
-                //   { total_cores: { $regex: total_cores, $options: "i" } },
+                { integrated_graphics: { $regex: integrated_graphics, $options: "i" } },
+                //!Required
                 { available: { $regex: available, $options: "i" } },
-                //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
             ],
-            // $orderby: { createdAt: -1 },
         }, {
             page,
             limit,

@@ -65,18 +65,21 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
-    const socket = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.socket) || "";
-    const manufacturer = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.manufacturer) || "";
-    const available = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.available) || "";
-    const gte_cores = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.gte_cores) || 0;
-    const lte_cores = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.lte_cores) || 666;
-    const gte = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.gte) || 0;
-    const lte = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.lte) || 9999999;
-    const sort = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.sort) || "";
+    const manufacturer = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.manufacturer) || "";
+    const available = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.available) || "";
+    const gte = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.gte) || 0;
+    const lte = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.lte) || 9999999;
+    const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
+    //!Component
+    const capacity = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.capacity) || "";
+    const efficiency_rating = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.efficiency_rating) || "";
+    const wattage = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.wattage) || "";
+    const form_factor = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.form_factor) || "";
+    const modular = ((_o = req.query) === null || _o === void 0 ? void 0 : _o.modular) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -91,19 +94,21 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const components = yield powerSchema_1.default.paginate({
             $or: [
                 { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
-                //   { keywords: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
                 { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
             ],
             price: { $gte: gte, $lte: lte },
-            // total_cores: { $gte: gte_cores, $lte: lte_cores },
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
-                //   { socket: { $regex: socket, $options: "i" } },
-                //   { total_cores: { $regex: total_cores, $options: "i" } },
+                { capacity: { $regex: capacity, $options: "i" } },
+                {
+                    efficiency_rating: efficiency_rating === "" ? { $regex: capacity, $options: "i" } : efficiency_rating,
+                },
+                { wattage: wattage === "" ? { $gte: 0, $lte: 3000 } : wattage },
+                { form_factor: { $regex: form_factor, $options: "i" } },
+                { modular: { $regex: modular, $options: "i" } },
+                //!Required
                 { available: { $regex: available, $options: "i" } },
-                //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
             ],
-            // $orderby: { createdAt: -1 },
         }, {
             page,
             limit,

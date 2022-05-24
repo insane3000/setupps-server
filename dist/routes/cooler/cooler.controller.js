@@ -70,13 +70,14 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
     const manufacturer = ((_d = req.query) === null || _d === void 0 ? void 0 : _d.manufacturer) || "";
-    const cooler_type = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.cooler_type) || "";
-    const fans = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.fans) || "";
-    const fans_size = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.fans_size) || "";
-    const available = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.available) || "";
-    const gte = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.gte) || 0;
-    const lte = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.lte) || 9999999;
-    const sort = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.sort) || "";
+    const available = ((_e = req.query) === null || _e === void 0 ? void 0 : _e.available) || "";
+    const gte = ((_f = req.query) === null || _f === void 0 ? void 0 : _f.gte) || 0;
+    const lte = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.lte) || 9999999;
+    const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
+    //!Component
+    const cooler_type = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.cooler_type) || "";
+    const fans = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.fans) || "";
+    const fans_size = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.fans_size) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -99,6 +100,7 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 { cooler_type: { $regex: cooler_type, $options: "i" } },
                 { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
                 { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
+                //!Required
                 { available: { $regex: available, $options: "i" } },
             ],
         }, {

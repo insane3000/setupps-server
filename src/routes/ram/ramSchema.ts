@@ -7,7 +7,7 @@ const ramSchema = new Schema(
     manufacturer: { type: String, trim: true },
     model: { type: String, trim: true },
 
-    memory_size: { type: Number, trim: true },
+    memory_size: { type: String, trim: true },
     speed: { type: String, trim: true },
     ram_type: { type: String, trim: true },
     CAS_latency: { type: Number, trim: true },

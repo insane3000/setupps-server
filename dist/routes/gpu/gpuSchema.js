@@ -9,7 +9,7 @@ const gpuSchema = new mongoose_1.Schema({
     type: { type: String, trim: true },
     manufacturer: { type: String, trim: true },
     model: { type: String, trim: true },
-    memory: { type: Number, trim: true },
+    memory: { type: String, trim: true },
     memory_type: { type: String, trim: true },
     gpu_boost_clock: { type: Number, trim: true },
     length: { type: Number, trim: true },

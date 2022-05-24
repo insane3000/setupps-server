@@ -16,7 +16,7 @@ const cpuSchema = new Schema(
     integrated_graphics: { type: String, trim: true },
     socket: { type: String, trim: true },
     architecture: { type: String, trim: true },
-    launch_date: { type: Date, trim: true },
+    launch_date: { type: String, trim: true },
     stock_cooler: { type: String, trim: true },
 
     imageM: [],

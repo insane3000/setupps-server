@@ -50,17 +50,16 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const page = parseInt(req.query?.page, 10) || 1;
   const limit = parseInt(req.query?.limit, 10) || 17;
   const search = req.query?.search || "";
-
   const manufacturer = req.query?.manufacturer || "";
-
-  const cooler_type = req.query?.cooler_type || "";
-  const fans = req.query?.fans || "";
-  const fans_size = req.query?.fans_size || "";
-
   const available = req.query?.available || "";
   const gte = req.query?.gte || 0;
   const lte = req.query?.lte || 9999999;
   const sort = req.query?.sort || "";
+  //!Component
+  const cooler_type = req.query?.cooler_type || "";
+  const fans = req.query?.fans || "";
+  const fans_size = req.query?.fans_size || "";
+
   console.log(req.query);
   // !Delete accents
   function diacriticSensitiveRegex(string = "") {
@@ -81,11 +80,10 @@ export const getComponents: RequestHandler = async (req: any, res) => {
         price: { $gte: gte, $lte: lte },
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
-
           { cooler_type: { $regex: cooler_type, $options: "i" } },
           { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
           { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
-
+          //!Required
           { available: { $regex: available, $options: "i" } },
         ],
       },

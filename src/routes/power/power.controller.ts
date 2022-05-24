@@ -50,14 +50,18 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const page = parseInt(req.query?.page, 10) || 1;
   const limit = parseInt(req.query?.limit, 10) || 17;
   const search = req.query?.search || "";
-  const socket = req.query?.socket || "";
   const manufacturer = req.query?.manufacturer || "";
   const available = req.query?.available || "";
-  const gte_cores = req.query?.gte_cores || 0;
-  const lte_cores = req.query?.lte_cores || 666;
   const gte = req.query?.gte || 0;
   const lte = req.query?.lte || 9999999;
   const sort = req.query?.sort || "";
+  //!Component
+  const capacity = req.query?.capacity || "";
+  const efficiency_rating = req.query?.efficiency_rating || "";
+  const wattage = req.query?.wattage || "";
+  const form_factor = req.query?.form_factor || "";
+  const modular = req.query?.modular || "";
+
   console.log(req.query);
   // !Delete accents
   function diacriticSensitiveRegex(string = "") {
@@ -73,19 +77,22 @@ export const getComponents: RequestHandler = async (req: any, res) => {
       {
         $or: [
           { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
-        //   { keywords: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
           { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
         ],
         price: { $gte: gte, $lte: lte },
-        // total_cores: { $gte: gte_cores, $lte: lte_cores },
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
-          //   { socket: { $regex: socket, $options: "i" } },
-          //   { total_cores: { $regex: total_cores, $options: "i" } },
+          { capacity: { $regex: capacity, $options: "i" } },
+          {
+            efficiency_rating:
+              efficiency_rating === "" ? { $regex: capacity, $options: "i" } : efficiency_rating,
+          },
+          { wattage: wattage === "" ? { $gte: 0, $lte: 3000 } : wattage },
+          { form_factor: { $regex: form_factor, $options: "i" } },
+          { modular: { $regex: modular, $options: "i" } },
+          //!Required
           { available: { $regex: available, $options: "i" } },
-          //   { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
         ],
-        // $orderby: { createdAt: -1 },
       },
       {
         page,

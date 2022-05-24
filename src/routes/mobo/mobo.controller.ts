@@ -50,17 +50,18 @@ export const deleteComponent: RequestHandler = async (req, res) => {
 export const getComponents: RequestHandler = async (req: any, res) => {
   const page = parseInt(req.query?.page, 10) || 1;
   const limit = parseInt(req.query?.limit, 10) || 17;
-
   const search = req.query?.search || "";
-  const socket = req.query?.socket || "";
   const manufacturer = req.query?.manufacturer || "";
-  const platform = req.query?.platform || "";
-  const chipset = req.query?.chipset || "";
   const available = req.query?.available || "";
-  const lan_speed_max = req.query?.lan_speed_max || "";
   const gte = req.query?.gte || 0;
   const lte = req.query?.lte || 9999999;
   const sort = req.query?.sort || "";
+
+  //!Component
+  const platform = req.query?.platform || "";
+  const socket = req.query?.socket || "";
+  const lan_speed_max = req.query?.lan_speed_max || "";
+
   console.log(req.query);
   // !Delete accents
   function diacriticSensitiveRegex(string = "") {
@@ -76,16 +77,16 @@ export const getComponents: RequestHandler = async (req: any, res) => {
       {
         $or: [
           { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
-          //   { keywords: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
           { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
         ],
         price: { $gte: gte, $lte: lte },
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
+          { platform: { $regex: platform, $options: "i" } },
           { socket: { $regex: socket, $options: "i" } },
-          { chipset: { $regex: chipset, $options: "i" } },
-          { available: { $regex: available, $options: "i" } },
           { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
+          //!Required
+          { available: { $regex: available, $options: "i" } },
         ],
       },
       {

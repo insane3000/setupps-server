@@ -10,7 +10,7 @@ const powerSchema = new mongoose_1.Schema({
     manufacturer: { type: String, trim: true },
     model: { type: String, trim: true },
     efficiency_rating: { type: String, trim: true },
-    wattage: { type: String, trim: true },
+    wattage: { type: Number, trim: true },
     form_factor: { type: String, trim: true },
     modular: { type: String, trim: true },
     imageM: [],

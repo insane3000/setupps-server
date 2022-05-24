@@ -8,7 +8,7 @@ const powerSchema = new Schema(
     model: { type: String, trim: true },
 
     efficiency_rating: { type: String, trim: true },
-    wattage: { type: String, trim: true },
+    wattage: { type: Number, trim: true },
     form_factor: { type: String, trim: true },
     modular: { type: String, trim: true },
 

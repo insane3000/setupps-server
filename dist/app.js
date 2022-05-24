@@ -23,13 +23,13 @@ const cooler_routes_1 = __importDefault(require("./routes/cooler/cooler.routes")
 const admin_routes_1 = __importDefault(require("./routes/admin/admin.routes"));
 var clientURI = {
     origin: [
-        "http://localhost:3000",
-        "http://localhost:3001",
+        //     "http://localhost:3000",
+        //     "http://localhost:3001",
         "http://192.168.0.148:3000",
         "http://192.168.0.148:3001",
+        "https://setupps.com",
         "https://www.setupps.com",
         "https://admin.setupps.com",
-        "https://setupps.com",
         "http://setupps-admin.s3-website-us-east-1.amazonaws.com",
     ],
 };
