@@ -59,6 +59,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
 
   //!Component
   const platform = req.query?.platform || "";
+  const ram_type = req.query?.ram_type || "";
   const socket = req.query?.socket || "";
   const lan_speed_max = req.query?.lan_speed_max || "";
 
@@ -83,6 +84,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
           { platform: { $regex: platform, $options: "i" } },
+          { ram_type: { $regex: ram_type, $options: "i" } },
           { socket: { $regex: socket, $options: "i" } },
           { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
           //!Required

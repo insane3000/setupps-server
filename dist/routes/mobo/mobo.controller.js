@@ -65,7 +65,7 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
@@ -76,8 +76,9 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
     //!Component
     const platform = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.platform) || "";
-    const socket = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.socket) || "";
-    const lan_speed_max = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.lan_speed_max) || "";
+    const ram_type = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.ram_type) || "";
+    const socket = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.socket) || "";
+    const lan_speed_max = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.lan_speed_max) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -98,6 +99,7 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
                 { platform: { $regex: platform, $options: "i" } },
+                { ram_type: { $regex: ram_type, $options: "i" } },
                 { socket: { $regex: socket, $options: "i" } },
                 { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
                 //!Required
