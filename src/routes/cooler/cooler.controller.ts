@@ -57,6 +57,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const sort = req.query?.sort || "";
   //!Component
   const cooler_type = req.query?.cooler_type || "";
+  const socket = req.query?.socket || "";
   const fans = req.query?.fans || "";
   const fans_size = req.query?.fans_size || "";
 
@@ -81,6 +82,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
           { cooler_type: { $regex: cooler_type, $options: "i" } },
+          { compatibility: { $regex: socket, $options: "i" } },
           { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
           { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
           //!Required

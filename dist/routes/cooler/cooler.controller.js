@@ -65,7 +65,7 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
@@ -76,8 +76,9 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
     //!Component
     const cooler_type = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.cooler_type) || "";
-    const fans = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.fans) || "";
-    const fans_size = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.fans_size) || "";
+    const socket = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.socket) || "";
+    const fans = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.fans) || "";
+    const fans_size = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.fans_size) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -98,6 +99,7 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
                 { cooler_type: { $regex: cooler_type, $options: "i" } },
+                { compatibility: { $regex: socket, $options: "i" } },
                 { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
                 { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
                 //!Required

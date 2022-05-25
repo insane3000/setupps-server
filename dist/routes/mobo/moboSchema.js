@@ -17,6 +17,7 @@ const moboSchema = new mongoose_1.Schema({
     form_factor: { type: String, trim: true },
     memory_speed_max: { type: Number, trim: true },
     lan_speed_max: { type: String, trim: true },
+    PCIe: { type: String, trim: true },
     imageM: [],
     imageS: [],
     specifications: [],

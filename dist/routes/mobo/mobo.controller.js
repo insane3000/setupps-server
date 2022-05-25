@@ -65,7 +65,7 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
@@ -79,6 +79,8 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const ram_type = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.ram_type) || "";
     const socket = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.socket) || "";
     const lan_speed_max = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.lan_speed_max) || "";
+    const form_factor = ((_o = req.query) === null || _o === void 0 ? void 0 : _o.form_factor) || "";
+    const PCIe = ((_p = req.query) === null || _p === void 0 ? void 0 : _p.PCIe) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -102,6 +104,8 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 { ram_type: { $regex: ram_type, $options: "i" } },
                 { socket: { $regex: socket, $options: "i" } },
                 { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
+                { form_factor: { $regex: form_factor, $options: "i" } },
+                { PCIe: { $regex: PCIe, $options: "i" } },
                 //!Required
                 { available: { $regex: available, $options: "i" } },
             ],

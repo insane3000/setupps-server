@@ -62,7 +62,8 @@ export const getComponents: RequestHandler = async (req: any, res) => {
   const ram_type = req.query?.ram_type || "";
   const socket = req.query?.socket || "";
   const lan_speed_max = req.query?.lan_speed_max || "";
-
+  const form_factor = req.query?.form_factor || "";
+  const PCIe = req.query?.PCIe || "";
   console.log(req.query);
   // !Delete accents
   function diacriticSensitiveRegex(string = "") {
@@ -87,6 +88,8 @@ export const getComponents: RequestHandler = async (req: any, res) => {
           { ram_type: { $regex: ram_type, $options: "i" } },
           { socket: { $regex: socket, $options: "i" } },
           { lan_speed_max: { $regex: lan_speed_max, $options: "i" } },
+          { form_factor: { $regex: form_factor, $options: "i" } },
+          { PCIe: { $regex: PCIe, $options: "i" } },
           //!Required
           { available: { $regex: available, $options: "i" } },
         ],
