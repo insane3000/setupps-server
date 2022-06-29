@@ -28,11 +28,11 @@ export const uploadLocal = async (req: any, res: Response, next: NextFunction) =
     }
     for (let index = 0; index < req.files.length; index++) {
       await sharp(req.files?.[index].buffer)
-        .resize(1000)
+        .resize(800)
         .webp()
-        .toFile(`${pathSave}${model}-${1000}px-${index + 1}-${random}.webp`)
+        .toFile(`${pathSave}${model}-${800}px-${index + 1}-${random}.webp`)
         .then(() => {
-          m.push(`${model}-${1000}px-${index + 1}-${random}.webp`);
+          m.push(`${model}-${800}px-${index + 1}-${random}.webp`);
           console.log("Img M complete!!");
         });
     }

@@ -15,12 +15,13 @@ import nvmeRoutes from "./routes/nvme/nvme.routes";
 import ssdRoutes from "./routes/ssd/ssd.routes";
 import hddRoutes from "./routes/hdd/hdd.routes";
 import coolerRoutes from "./routes/cooler/cooler.routes";
+import fanRoutes from "./routes/fan/fan.routes";
 import adminRoutes from "./routes/admin/admin.routes";
 
 var clientURI = {
   origin: [
-    //     "http://localhost:3000",
-    //     "http://localhost:3001",
+    "http://localhost:3000",
+    "http://localhost:3001",
     "http://192.168.0.148:3000",
     "http://192.168.0.148:3001",
     "https://setupps.com",
@@ -48,5 +49,6 @@ app.use(nvmeRoutes);
 app.use(ssdRoutes);
 app.use(hddRoutes);
 app.use(coolerRoutes);
+app.use(fanRoutes);
 app.use(adminRoutes);
 export default app;

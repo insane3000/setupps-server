@@ -94,7 +94,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
       {
         page,
         limit,
-        sort: sort === "" ? { createdAt: "desc" } : { price: sort },
+        sort: sort === "" ? { createdAt: "desc" } : { model: sort },
       }
     );
     return res.json(components);

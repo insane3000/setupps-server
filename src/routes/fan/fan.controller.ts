@@ -1,17 +1,17 @@
 import { Response, RequestHandler } from "express";
-import Cooler from "./coolerSchema";
+import fan from "./fanSchema";
 import fs from "fs";
 import path from "path";
 // !POST
 export const createComponent: RequestHandler = async (req: any, res) => {
-  let newComponent = new Cooler(req.body);
+  let newComponent = new fan(req.body);
   const savedComponent = await newComponent.save();
   console.log("Saved Component");
   res.json(savedComponent);
 };
 //! PUT
 export const updateComponent: RequestHandler = async (req: any, res) => {
-  const componentUpdated = await Cooler.findByIdAndUpdate(req.body._id, req.body, {
+  const componentUpdated = await fan.findByIdAndUpdate(req.body._id, req.body, {
     new: true,
   });
   if (!componentUpdated) return res.status(204).json();
@@ -20,7 +20,7 @@ export const updateComponent: RequestHandler = async (req: any, res) => {
 };
 // !DELETE
 export const deleteComponent: RequestHandler = async (req, res) => {
-  const componentFound: any = await Cooler.findByIdAndDelete(req.params.id);
+  const componentFound: any = await fan.findByIdAndDelete(req.params.id);
   const pathDelete = path.join(__dirname, `../../../public/${req.query.component}`);
 
   if (!componentFound) return res.status(204).json();
@@ -72,7 +72,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
       .replace(/u/g, "[u,ü,ú,ù]");
   }
   try {
-    const components = await Cooler.paginate(
+    const components = await fan.paginate(
       {
         $or: [
           { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
@@ -81,9 +81,9 @@ export const getComponents: RequestHandler = async (req: any, res) => {
         price: { $gte: gte, $lte: lte },
         $and: [
           { manufacturer: { $regex: manufacturer, $options: "i" } },
-          { cooler_type: { $regex: cooler_type, $options: "i" } },
-          { compatibility: { $regex: socket, $options: "i" } },
-          { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
+          //   { cooler_type: { $regex: cooler_type, $options: "i" } },
+          //   { compatibility: { $regex: socket, $options: "i" } },
+          //   { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
           { fans_size: fans_size === "" ? { $gte: 0, $lte: 140 } : fans_size },
           //!Required
           { available: { $regex: available, $options: "i" } },
@@ -106,7 +106,7 @@ export const getComponents: RequestHandler = async (req: any, res) => {
 export const getComponent: RequestHandler = async (req, res) => {
   const id = req.params.id;
   try {
-    const component = await Cooler.findById(id);
+    const component = await fan.findById(id);
     return res.json(component);
   } catch (error) {
     return res.status(204).json();
