@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getComponent = exports.getComponents = exports.deleteComponent = exports.updateComponent = exports.createComponent = void 0;
-const ramSchema_1 = __importDefault(require("./ramSchema"));
+const fanSchema_1 = __importDefault(require("./fanSchema"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 // !POST
 const createComponent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let newComponent = new ramSchema_1.default(req.body);
+    let newComponent = new fanSchema_1.default(req.body);
     const savedComponent = yield newComponent.save();
     console.log("Saved Component");
     res.json(savedComponent);
@@ -26,7 +26,7 @@ const createComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.createComponent = createComponent;
 //! PUT
 const updateComponent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const componentUpdated = yield ramSchema_1.default.findByIdAndUpdate(req.body._id, req.body, {
+    const componentUpdated = yield fanSchema_1.default.findByIdAndUpdate(req.body._id, req.body, {
         new: true,
     });
     if (!componentUpdated)
@@ -35,9 +35,9 @@ const updateComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
     return res.json(componentUpdated);
 });
 exports.updateComponent = updateComponent;
-//! DELETE
+// !DELETE
 const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const componentFound = yield ramSchema_1.default.findByIdAndDelete(req.params.id);
+    const componentFound = yield fanSchema_1.default.findByIdAndDelete(req.params.id);
     const pathDelete = path_1.default.join(__dirname, `../../../public/${req.query.component}`);
     if (!componentFound)
         return res.status(204).json();
@@ -65,7 +65,7 @@ const deleteComponent = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.deleteComponent = deleteComponent;
 // !GET
 const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const page = parseInt((_a = req.query) === null || _a === void 0 ? void 0 : _a.page, 10) || 1;
     const limit = parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.limit, 10) || 17;
     const search = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.search) || "";
@@ -75,8 +75,10 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const lte = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.lte) || 9999999;
     const sort = ((_h = req.query) === null || _h === void 0 ? void 0 : _h.sort) || "";
     //!Component
-    const memory_size = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.memory_size) || "";
-    const ram_type = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.ram_type) || "";
+    const cooler_type = ((_j = req.query) === null || _j === void 0 ? void 0 : _j.cooler_type) || "";
+    const socket = ((_k = req.query) === null || _k === void 0 ? void 0 : _k.socket) || "";
+    const fans = ((_l = req.query) === null || _l === void 0 ? void 0 : _l.fans) || "";
+    const fans_size = ((_m = req.query) === null || _m === void 0 ? void 0 : _m.fans_size) || "";
     console.log(req.query);
     // !Delete accents
     function diacriticSensitiveRegex(string = "") {
@@ -88,7 +90,7 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             .replace(/u/g, "[u,ü,ú,ù]");
     }
     try {
-        const components = yield ramSchema_1.default.paginate({
+        const components = yield fanSchema_1.default.paginate({
             $or: [
                 { model: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
                 { manufacturer: { $regex: diacriticSensitiveRegex(search), $options: "i" } },
@@ -96,19 +98,17 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             price: { $gte: gte, $lte: lte },
             $and: [
                 { manufacturer: { $regex: manufacturer, $options: "i" } },
-                {
-                    memory_size: memory_size === "" ? { $regex: memory_size, $options: "i" } : memory_size,
-                },
-                {
-                    ram_type: ram_type === "" ? { $regex: ram_type, $options: "i" } : ram_type,
-                },
+                //   { cooler_type: { $regex: cooler_type, $options: "i" } },
+                //   { compatibility: { $regex: socket, $options: "i" } },
+                //   { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
+                { fans_size: fans_size === "" ? { $gte: 0, $lte: 140 } : fans_size },
                 //!Required
                 { available: { $regex: available, $options: "i" } },
             ],
         }, {
             page,
             limit,
-            sort: sort === "" ? { createdAt: "desc" } : { model: sort },
+            sort: sort === "" ? { createdAt: "desc" } : { price: sort },
         });
         return res.json(components);
         //     }
@@ -119,11 +119,11 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getComponents = getComponents;
-// //! GET :id
+// !GET :id
 const getComponent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     try {
-        const component = yield ramSchema_1.default.findById(id);
+        const component = yield fanSchema_1.default.findById(id);
         return res.json(component);
     }
     catch (error) {

@@ -41,11 +41,11 @@ const uploadLocal = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         }
         for (let index = 0; index < req.files.length; index++) {
             yield (0, sharp_1.default)((_b = req.files) === null || _b === void 0 ? void 0 : _b[index].buffer)
-                .resize(1000)
+                .resize(800)
                 .webp()
-                .toFile(`${pathSave}${model}-${1000}px-${index + 1}-${random}.webp`)
+                .toFile(`${pathSave}${model}-${800}px-${index + 1}-${random}.webp`)
                 .then(() => {
-                m.push(`${model}-${1000}px-${index + 1}-${random}.webp`);
+                m.push(`${model}-${800}px-${index + 1}-${random}.webp`);
                 console.log("Img M complete!!");
             });
         }

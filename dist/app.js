@@ -20,11 +20,12 @@ const nvme_routes_1 = __importDefault(require("./routes/nvme/nvme.routes"));
 const ssd_routes_1 = __importDefault(require("./routes/ssd/ssd.routes"));
 const hdd_routes_1 = __importDefault(require("./routes/hdd/hdd.routes"));
 const cooler_routes_1 = __importDefault(require("./routes/cooler/cooler.routes"));
+const fan_routes_1 = __importDefault(require("./routes/fan/fan.routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin/admin.routes"));
 var clientURI = {
     origin: [
-        //     "http://localhost:3000",
-        //     "http://localhost:3001",
+        "http://localhost:3000",
+        "http://localhost:3001",
         "http://192.168.0.148:3000",
         "http://192.168.0.148:3001",
         "https://setupps.com",
@@ -51,5 +52,6 @@ app.use(nvme_routes_1.default);
 app.use(ssd_routes_1.default);
 app.use(hdd_routes_1.default);
 app.use(cooler_routes_1.default);
+app.use(fan_routes_1.default);
 app.use(admin_routes_1.default);
 exports.default = app;

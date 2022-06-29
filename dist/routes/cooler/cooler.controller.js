@@ -101,7 +101,7 @@ const getComponents = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 { cooler_type: { $regex: cooler_type, $options: "i" } },
                 { compatibility: { $regex: socket, $options: "i" } },
                 { fans: fans === "" ? { $gte: 0, $lte: 10 } : fans },
-                { fans_size: fans_size === "" ? { $gte: 1, $lte: 140 } : fans_size },
+                { fans_size: fans_size === "" ? { $gte: 0, $lte: 140 } : fans_size },
                 //!Required
                 { available: { $regex: available, $options: "i" } },
             ],
