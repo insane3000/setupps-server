@@ -27,6 +27,7 @@ var clientURI = {
     "https://setupps.com",
     "https://www.setupps.com",
     "https://admin.setupps.com",
+    "https://psu.setupps.com",
     "http://setupps-admin.s3-website-us-east-1.amazonaws.com",
   ],
 };
